@@ -1,0 +1,23 @@
+name: Deploy Environments
+
+on:
+  workflow_call:
+    inputs:
+      env:
+        required: true
+        type: string
+
+jobs:
+
+  InfrastructurePromote:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.env }}
+    steps:
+      - name: Running Infrastructure
+        run: |
+          echo  "Infrastructure ${{ inputs.env }}"
+
+      - name: Checkout reusable Actions
+        uses: actions/checkout@v2
+        with:
+          repository: 'porqueeuprogramo/pep-restaurant-deploy-pipeline'
