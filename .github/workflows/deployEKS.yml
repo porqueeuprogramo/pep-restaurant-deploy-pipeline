@@ -1,5 +1,4 @@
 name: Deploy EKS
-description: 'Deploys specific docker image to EKS cluster'
 
 on:
   workflow_call:
