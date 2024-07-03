@@ -28,7 +28,7 @@ jobs:
     strategy:
       matrix:
         service: [ 'pep-restaurant-ms-manager' ]
-    uses: ./.github/actions/deployEKS.yml
+    uses: ./.github/workflows/deployEKS.yml
     with:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PEP }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PEP }}
