@@ -9,16 +9,16 @@ on:
         default: "dev"
 
 jobs:
-#  DeployEnvs:
-#    uses: ./.github/workflows/envsDeploy.yml
-#    with:
-#      env: ${{ inputs.env }}
-#  Runterraform:
-#    needs: [DeployEnvs]
-#    secrets: inherit
-#    uses: ./.github/workflows/runTerraform.yml
-#    with:
-#      env: ${{ inputs.env }}
+  DeployEnvs:
+    uses: ./.github/workflows/envsDeploy.yml
+    with:
+      env: ${{ inputs.env }}
+  Runterraform:
+    needs: [DeployEnvs]
+    secrets: inherit
+    uses: ./.github/workflows/runTerraform.yml
+    with:
+      env: ${{ inputs.env }}
   DeployEKS:
     strategy:
       matrix:
