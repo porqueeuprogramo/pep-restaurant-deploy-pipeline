@@ -59,14 +59,6 @@ jobs:
               echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY_PEP }}" >> ~/.aws/credentials
               echo "[profile ${{ secrets.AWS_PROFILE }}]" > ~/.aws/config
               echo "region=$AWS_REGION" >> ~/.aws/config
-            with:
-                aws-region: eu-west-2
-                role-to-assume: arn:aws:iam::905418115951:role/eks-cluster-pep
-                role-duration-seconds: 1200
-                role-session-name: manager
-                role-skip-session-tagging: true
-                output-credentials: true
-                role-chaining: true
 
         -   name: Generate kubeconfig and setting context
             run: |
