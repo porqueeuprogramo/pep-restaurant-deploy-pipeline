@@ -77,6 +77,6 @@ jobs:
                 HELM_WORKING_DIRECTORY: ${{inputs.helm-working-directory}}
                 WORKSPACE: ${{ github.workspace }}
             run: |
-                helm upgrade --install ${{ inputs.SERVICE}} ${{ inputs.HELM_CHART }} --set app.properties.content=${{ inputs.CONTENT }} --set image.tag=${{ inputs.IMAGE_TAG }} -f ${{ inputs.HELM_CHART}}/values/${{ inputs.HUB }}/values-${{ inputs.ENV }}.yaml --namespace=${{ inputs.NAMESPACE }}
+                helm upgrade --install ${{ inputs.SERVICE}} ${{ inputs.HELM_CHART }} --set app.properties.content=${{ inputs.CONTENT }} --set image.tag=${{ inputs.IMAGE_TAG }} -f ${{ inputs.HELM_CHART}}/values/values-${{ inputs.ENV }}.yaml --namespace=${{ inputs.NAMESPACE }}
                 kubectl delete pods -l app=${{ inputs.SERVICE}}
             shell: bash
