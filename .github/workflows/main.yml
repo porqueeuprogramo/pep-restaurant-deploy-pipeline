@@ -15,7 +15,7 @@ on:
 
 jobs:
   DeployEKS:
-    runs-on: cawe-linux-x64-general-medium
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         service: [ 'pep-restaurant-ms-manager' ]
