@@ -15,11 +15,11 @@ jobs:
       env: ${{ inputs.env }}
   Runterraform:
     needs: [DeployEnvs]
-    secrets: inherit
     uses: ./.github/workflows/runTerraform.yml
     with:
       env: ${{ inputs.env }}
   DeployEKS:
+    needs: [Runterraform]
     strategy:
       matrix:
         service: [ 'pep-restaurant-ms-manager' ]
