@@ -1,35 +1,46 @@
 name: 'Deploy EKS'
 description: 'Deploys specific docker image to EKS cluster'
 
-inputs:
-    AWS_ACCESS_KEY_ID:
-        description: "AWS Access Key of the account where the docker image will be stored."
-        required: true
-    AWS_SECRET_ACCESS_KEY:
-        description: "AWS Secret Access Key of the account where the docker image will be stored."
-        required: true
-    REGION:
-        description: "Name of the region to connect to."
-        required: true
-    ENV:
-        description: "Name of the EKS environment where the docker image will be deployed."
-        required: true
-    NAMESPACE:
-        description: "Name of the EKS namespace where the docker image will be deployed."
-        required: true
-    SERVICE:
-        description: "Name of the service to be deployed."
-        required: true
-    IMAGE_TAG:
-        description: "Tag of docker image present in ECR"
-        required: true
-    HELM_CHART:
-        description: "Helm folder"
-        required: false
-        default: "kubernetes"
-runs:
-    using: composite
-    steps:
+on:
+  workflow_call:
+    inputs:
+      AWS_ACCESS_KEY_ID:
+          description: "AWS Access Key of the account where the docker image will be stored."
+          required: true
+          type: string
+      AWS_SECRET_ACCESS_KEY:
+          description: "AWS Secret Access Key of the account where the docker image will be stored."
+          required: true
+          type: string
+      REGION:
+          description: "Name of the region to connect to."
+          required: true
+          type: string
+      ENV:
+          description: "Name of the EKS environment where the docker image will be deployed."
+          required: true
+          type: string
+      NAMESPACE:
+          description: "Name of the EKS namespace where the docker image will be deployed."
+          required: true
+          type: string
+      SERVICE:
+          description: "Name of the service to be deployed."
+          required: true
+          type: string
+      IMAGE_TAG:
+          description: "Tag of docker image present in ECR"
+          required: true
+          type: string
+      HELM_CHART:
+          description: "Helm folder"
+          required: false
+          default: "kubernetes"
+          type: string
+jobs:
+    RunTerraform:
+      runs-on: ubuntu-latest
+      steps:
         -   uses: actions/checkout@v3
             with:
                 submodules: true
@@ -77,4 +88,3 @@ runs:
                 WORKSPACE: ${{ github.workspace }}
             run: |
                 helm upgrade --install ${{ inputs.SERVICE}} ${{ inputs.HELM_CHART }} --set app.properties.content=${{ inputs.CONTENT }} --set image.tag=${{ inputs.IMAGE_TAG }} -f ${{ inputs.HELM_CHART}}/values/${{ inputs.HUB }}/values-${{ inputs.ENV }}.yaml --namespace=${{ inputs.NAMESPACE }}
-            shell: bash
