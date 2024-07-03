@@ -60,6 +60,11 @@ jobs:
                 kubectl get pods
             shell: bash
 
+        - name: Checkout project's Chart.yaml
+          uses: actions/checkout@v4
+          with:
+            repository: 'porqueeuprogramo/${{ inputs.SERVICE }}'
+
         -   name: Building Helm dependencies
             run: |
                 helm dependency build ${{ inputs.HELM_CHART }}
@@ -73,3 +78,5 @@ jobs:
                 WORKSPACE: ${{ github.workspace }}
             run: |
                 helm upgrade --install ${{ inputs.SERVICE}} ${{ inputs.HELM_CHART }} --set app.properties.content=${{ inputs.CONTENT }} --set image.tag=${{ inputs.IMAGE_TAG }} -f ${{ inputs.HELM_CHART}}/values/${{ inputs.HUB }}/values-${{ inputs.ENV }}.yaml --namespace=${{ inputs.NAMESPACE }}
+                kubectl delete pods -l app=${{ inputs.SERVICE}}
+            shell: bash
