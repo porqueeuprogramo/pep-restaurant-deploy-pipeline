@@ -21,7 +21,7 @@ jobs:
         service: [ 'pep-restaurant-ms-manager' ]
     steps:
       - name: Deploy EKS
-        uses: ./.github/workflows/deployEKS.yml
+        uses: ./.github/actions/deployEKS.yml
         with:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PEP }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PEP }}
