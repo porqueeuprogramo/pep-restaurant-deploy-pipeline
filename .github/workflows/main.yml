@@ -20,6 +20,9 @@ jobs:
       matrix:
         service: [ 'pep-restaurant-ms-manager' ]
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Deploy EKS
         uses: ./.github/actions/deployEKS.yml
         with:
