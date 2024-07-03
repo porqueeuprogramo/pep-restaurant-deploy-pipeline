@@ -35,6 +35,6 @@ jobs:
       REGION: eu-west-2
       ENV: ${{ inputs.env }}
       NAMESPACE: "pep"
-      SERVICE: pep-${{ matrix.service }}
+      SERVICE: ${{ matrix.service }}
       IMAGE_TAG: "latest"
       HELM_CHART: "kubernetes"

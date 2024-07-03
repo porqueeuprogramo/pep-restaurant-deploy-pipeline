@@ -62,7 +62,7 @@ jobs:
 
         -   name: Building Helm dependencies
             run: |
-                helm dependency build ${{ inputs.HELM_CHART }}
+                helm dependency build .
             shell: bash
 
         -   name: Deploy Helm Chart to Kubernetes
