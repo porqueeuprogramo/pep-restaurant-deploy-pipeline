@@ -7,11 +7,6 @@ on:
         description: 'Choose envs to deploy to'
         required: false
         default: "dev"
-    secrets:
-      AWS_ACCESS_KEY_ID_PEP:
-        required: true
-      AWS_SECRET_ACCESS_KEY_PEP:
-        required: true
 
 jobs:
 #  DeployEnvs:
