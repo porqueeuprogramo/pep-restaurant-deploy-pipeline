@@ -61,7 +61,20 @@ jobs:
               echo "region=$AWS_REGION" >> ~/.aws/config
 
         -   name: Generate kubeconfig and setting context
+            env:
+              AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PEP }}
+              AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PEP }}
+              AWS_REGION: ${{inputs.aws_region}}
+              AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+              AWS_PROFILE: ${{ secrets.AWS_PROFILE }}
             run: |
+                mkdir -p ~/.aws
+                echo "[${{ secrets.AWS_PROFILE }}]" > ~/.aws/credentials
+                echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID_PEP }}" >> ~/.aws/credentials
+                echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY_PEP }}" >> ~/.aws/credentials
+                echo "[profile ${{ secrets.AWS_PROFILE }}]" > ~/.aws/config
+                echo "region=$AWS_REGION" >> ~/.aws/config
+                
                 aws eks --region ${{ inputs.REGION }} update-kubeconfig --name eks_cluster_pep
                 kubectl config set-context --current --namespace ${{ inputs.NAMESPACE }}
                 kubectl get pods
