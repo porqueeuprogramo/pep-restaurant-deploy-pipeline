@@ -4,14 +4,6 @@ description: 'Deploys specific docker image to EKS cluster'
 on:
   workflow_call:
     inputs:
-      AWS_ACCESS_KEY_ID:
-          description: "AWS Access Key of the account where the docker image will be stored."
-          required: true
-          type: string
-      AWS_SECRET_ACCESS_KEY:
-          description: "AWS Secret Access Key of the account where the docker image will be stored."
-          required: true
-          type: string
       REGION:
           description: "Name of the region to connect to."
           required: true

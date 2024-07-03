@@ -25,11 +25,9 @@ jobs:
         service: [ 'pep-restaurant-ms-manager' ]
     uses: ./.github/workflows/deployEKS.yml
     with:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PEP }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PEP }}
-      REGION: ${{ inputs.awsRegion }}
-      ENV: ${{ inputs.stage }}
+      REGION: eu-west-2
+      ENV: ${{ inputs.env }}
       NAMESPACE: "pep"
       SERVICE: pep-${{ matrix.service }}
-      IMAGE_TAG: "latest-${{ inputs.env }}"
+      IMAGE_TAG: "latest"
       HELM_CHART: "kubernetes"
