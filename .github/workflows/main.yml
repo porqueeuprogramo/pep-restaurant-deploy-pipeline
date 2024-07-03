@@ -26,6 +26,7 @@ jobs:
       env: ${{ inputs.env }}
   DeployEKS:
     needs: [Runterraform]
+    secrets: inherit
     strategy:
       matrix:
         service: [ 'pep-restaurant-ms-manager' ]
