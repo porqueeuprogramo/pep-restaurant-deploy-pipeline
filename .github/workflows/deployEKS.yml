@@ -89,5 +89,4 @@ jobs:
                 SERVICE: ${{ inputs.SERVICE }}
             run: |
                 helm upgrade --install ${{ inputs.SERVICE}} ${{ inputs.HELM_CHART }} --set app.properties.content=${{ inputs.CONTENT }} --set image.tag=${{ inputs.IMAGE_TAG }} -f ${{ inputs.HELM_CHART}}/values/values-${{ inputs.ENV }}.yaml --namespace=${{ inputs.NAMESPACE }}
-                kubectl delete pods -l app=${{ inputs.SERVICE}}
             shell: bash
