@@ -53,6 +53,15 @@ jobs:
               aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID_PEP }} --profile ${{ secrets.AWS_PROFILE }}
               aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY_PEP }} --profile ${{ secrets.AWS_PROFILE }}
 
+        -   name: Ensure Kubernetes Namespace Exists
+            env:
+              NAMESPACE: ${{ inputs.NAMESPACE }}
+            run: |
+              if ! kubectl get namespace $NAMESPACE; then
+                kubectl create namespace $NAMESPACE
+              fi
+            shell: bash
+
         -   name: Generate kubeconfig and setting context
             run: |
                 aws eks --region ${{ inputs.REGION }} update-kubeconfig --name eks_cluster_pep --profile ${{ secrets.AWS_PROFILE }}
@@ -76,6 +85,8 @@ jobs:
                 AWS_REGION: ${{ inputs.REGION }}
                 HELM_WORKING_DIRECTORY: ${{inputs.helm-working-directory}}
                 WORKSPACE: ${{ github.workspace }}
+                NAMESPACE: ${{ inputs.NAMESPACE }}
+                SERVICE: ${{ inputs.SERVICE }}
             run: |
                 helm upgrade --install ${{ inputs.SERVICE}} ${{ inputs.HELM_CHART }} --set app.properties.content=${{ inputs.CONTENT }} --set image.tag=${{ inputs.IMAGE_TAG }} -f ${{ inputs.HELM_CHART}}/values/values-${{ inputs.ENV }}.yaml --namespace=${{ inputs.NAMESPACE }}
                 kubectl delete pods -l app=${{ inputs.SERVICE}}
