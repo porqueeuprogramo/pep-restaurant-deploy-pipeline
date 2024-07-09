@@ -6,15 +6,18 @@ on:
       env:
         required: true
         type: string
+      phase:
+        required: true
+        type: string
 
 jobs:
   RunTerraform:
     runs-on: ubuntu-latest
     environment: ${{ inputs.env }}
     steps:
-      - name: Running Terraform
+      - name: Running Terraform phase
         run: |
-          echo  "Run terraform ${{ inputs.env }}"
+          echo  "Run terraform phase ${{ inputs.env }}"
 
       - name: Checkout reusable Actions
         uses: actions/checkout@v2
@@ -30,13 +33,13 @@ jobs:
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID_PEP }} --profile ${{ secrets.AWS_PROFILE }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY_PEP }} --profile ${{ secrets.AWS_PROFILE }}
 
-      - name: Terraform Init
+      - name: Terraform Init phase ${{ inputs.env }}
         run: terraform init
-        working-directory: ./
+        working-directory: ./phase${{ inputs.phase }}
 
-      - name: Terraform Plan
+      - name: Terraform Plan phase ${{ inputs.env }}
         run: terraform plan
-        working-directory: ./
+        working-directory: ./phase${{ inputs.phase }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -45,15 +48,15 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PEP }}
           aws-region: eu-west-2
 
-      - name: Download Terraform state file from S3
-        run: aws s3 cp s3://terraform-state-pep/terraform.tfstate terraform.tfstate
+      - name: Download Terraform state phase ${{ inputs.env }} file from S3
+        run: aws s3 cp s3://terraform-state-pep/phase${{ inputs.phase }}/terraform.tfstate terraform.tfstate
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PEP }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PEP }}
 
-      - name: Terraform Apply
+      - name: Terraform Apply phase ${{ inputs.env }}
         run: terraform apply -state=terraform.tfstate -auto-approve
-        working-directory: ./
+        working-directory: ./${{ inputs.phase }}
 
-      - name: Upload Terraform state file to S3
-        run: aws s3 cp terraform.tfstate s3://terraform-state-pep/terraform.tfstate
+      - name: Upload Terraform phase ${{ inputs.env }} state file to S3
+        run: aws s3 cp terraform.tfstate s3://terraform-state-pep/phase${{ inputs.phase }}//terraform.tfstate

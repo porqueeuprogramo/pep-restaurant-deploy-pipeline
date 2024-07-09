@@ -18,14 +18,22 @@ jobs:
     uses: ./.github/workflows/envsDeploy.yml
     with:
       env: ${{ inputs.env }}
-  Runterraform:
+  RunterraformPhase1:
     needs: [DeployEnvs]
     secrets: inherit
     uses: ./.github/workflows/runTerraform.yml
     with:
       env: ${{ inputs.env }}
+      phase: 1
+  RunterraformPhase2:
+    needs: [ RunterraformPhase2 ]
+    secrets: inherit
+    uses: ./.github/workflows/runTerraform.yml
+    with:
+      env: ${{ inputs.env }}
+      phase: 2
   DeployEKS:
-    needs: [Runterraform]
+    needs: [RunterraformPhase1]
     secrets: inherit
     strategy:
       matrix:
