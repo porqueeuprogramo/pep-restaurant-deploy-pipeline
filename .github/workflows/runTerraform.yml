@@ -59,4 +59,4 @@ jobs:
         working-directory: ./phase${{ inputs.phase }}
 
       - name: Upload Terraform phase ${{ inputs.phase }} state file to S3
-        run: aws s3 cp terraform.tfstate s3://terraform-state-pep/phase${{ inputs.phase }}//terraform.tfstate
+        run: aws s3 cp terraform.tfstate s3://terraform-state-pep/phase${{ inputs.phase }}/terraform.tfstate
