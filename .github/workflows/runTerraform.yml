@@ -56,7 +56,7 @@ jobs:
 
       - name: Terraform Apply phase ${{ inputs.phase }}
         run: terraform apply -state=terraform.tfstate -auto-approve
-        working-directory: ./${{ inputs.phase }}
+        working-directory: ./phase${{ inputs.phase }}
 
       - name: Upload Terraform phase ${{ inputs.phase }} state file to S3
         run: aws s3 cp terraform.tfstate s3://terraform-state-pep/phase${{ inputs.phase }}//terraform.tfstate
