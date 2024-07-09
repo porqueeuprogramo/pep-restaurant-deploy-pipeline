@@ -56,8 +56,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PEP }}
 
       - name: Terraform Apply phase ${{ inputs.phase }}
-        run: terraform apply -state=terraform.tfstate -auto-approve
         working-directory: ./phase${{ inputs.phase }}
+        run: terraform apply -state=terraform.tfstate -auto-approve
 
       - name: Upload Terraform phase ${{ inputs.phase }} state file to S3
         run: aws s3 cp ./phase${{ inputs.phase }}/terraform.tfstate s3://terraform-state-pep/phase${{ inputs.phase }}/terraform.tfstate
