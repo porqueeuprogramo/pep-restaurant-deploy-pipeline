@@ -48,11 +48,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PEP }}
           aws-region: eu-west-2
 
-#      - name: Download Terraform state phase ${{ inputs.phase }} file from S3
-#        run: aws s3 cp s3://terraform-state-pep/phase${{ inputs.phase }}/terraform.tfstate terraform.tfstate
-#        env:
-#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PEP }}
-#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PEP }}
+      - name: Download Terraform state phase ${{ inputs.phase }} file from S3
+        run: aws s3 cp s3://terraform-state-pep/phase${{ inputs.phase }}/terraform.tfstate terraform.tfstate
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PEP }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PEP }}
 
       - name: Terraform Apply phase ${{ inputs.phase }}
         run: terraform apply -state=terraform.tfstate -auto-approve
