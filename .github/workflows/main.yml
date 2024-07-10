@@ -14,24 +14,24 @@ on:
         required: true
 
 jobs:
-  DeployEnvs:
-    uses: ./.github/workflows/envsDeploy.yml
-    with:
-      env: ${{ inputs.env }}
-  RunterraformPhase1:
-    needs: [DeployEnvs]
-    secrets: inherit
-    uses: ./.github/workflows/runTerraform.yml
-    with:
-      env: ${{ inputs.env }}
-      phase: 1
-  RunterraformPhase2:
-    needs: [ RunterraformPhase1 ]
-    secrets: inherit
-    uses: ./.github/workflows/runTerraform.yml
-    with:
-      env: ${{ inputs.env }}
-      phase: 2
+#  DeployEnvs:
+#    uses: ./.github/workflows/envsDeploy.yml
+#    with:
+#      env: ${{ inputs.env }}
+#  RunterraformPhase1:
+#    needs: [DeployEnvs]
+#    secrets: inherit
+#    uses: ./.github/workflows/runTerraform.yml
+#    with:
+#      env: ${{ inputs.env }}
+#      phase: 1
+#  RunterraformPhase2:
+#    needs: [ RunterraformPhase1 ]
+#    secrets: inherit
+#    uses: ./.github/workflows/runTerraform.yml
+#    with:
+#      env: ${{ inputs.env }}
+#      phase: 2
   DeployEKS:
     needs: [RunterraformPhase2]
     secrets: inherit
