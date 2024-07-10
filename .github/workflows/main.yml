@@ -33,7 +33,6 @@ jobs:
 #      env: ${{ inputs.env }}
 #      phase: 2
   DeployEKS:
-    needs: [RunterraformPhase2]
     secrets: inherit
     strategy:
       matrix:
