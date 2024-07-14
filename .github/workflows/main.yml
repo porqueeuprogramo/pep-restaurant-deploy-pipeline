@@ -21,7 +21,7 @@ jobs:
   RunterraformPhase1:
     needs: [DeployEnvs]
     secrets: inherit
-    uses: ./.github/workflows/runTerraform2.yml
+    uses: ./.github/workflows/runTerraform1.yml
     with:
       env: ${{ inputs.env }}
       phase: 1
