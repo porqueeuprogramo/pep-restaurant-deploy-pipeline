@@ -55,7 +55,7 @@ jobs:
 
         -   name: Generate kubeconfig and setting context
             run: |
-                aws eks --region ${{ inputs.REGION }} update-kubeconfig --name eks_cluster_pep5 --profile ${{ secrets.AWS_PROFILE }}
+                aws eks --region ${{ inputs.REGION }} update-kubeconfig --name eks_cluster_pep6 --profile ${{ secrets.AWS_PROFILE }}
                 kubectl config set-context --current --namespace ${{ inputs.NAMESPACE }}
                 kubectl get pods
             shell: bash
